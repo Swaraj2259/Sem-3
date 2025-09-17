@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-database-compat.js"></script>
+
+  
+</head>
+
+<body>
+  <h1>Welcome to Dashboard 🎉</h1>
+ 
+
+  <script type="module">
+    const firebaseConfig = {
+            apiKey: "AIzaSyDo8kMMen-pFs7-meRa6Ue2rcnbTE5xOtM",
+            authDomain: "classwork-81321.firebaseapp.com",
+            projectId: "classwork-81321",
+            storageBucket: "classwork-81321.firebasestorage.app",
+            messagingSenderId: "354105108326",
+            appId: "1:354105108326:web:48e360415142ed20580aa7",
+            measurementId: "G-HGCWJJ5HPE"
+        };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    // ✅ Create Document
+    async function createDocument(name, desc) {
+      try {
+        let res = await db.collection("brands").add({ name, desc });
+        console.log(`Document created with ID: ${res.id}`);
+      } catch (e) {
+        console.log(`Something went wrong: ${e}`);
+      }
+    }
+
+    // ✅ Read All Documents
+    async function readAllDocuments() {
+      try {
+        let snapshot = await db.collection("brands").get();
+        snapshot.forEach(doc => {
+          console.log(`${doc.id} =>`, doc.data());
+        });
+      } catch (e) {
+        console.log(`Something went wrong: ${e}`);
+      }
+    }
+
+    // ✅ Update Document
+    async function updateDocument(docId, name, desc) {
+      try {
+        await db.collection("brands").doc(docId).update({ name, desc });
+        console.log(`Document with ID ${docId} updated`);
+      } catch (e) {
+        console.log(`Something went wrong: ${e}`);
+      }
+    }
+
+    // ✅ Delete Document
+    async function deleteDocument(docId) {
+      try {
+        await db.collection("brands").doc(docId).delete();
+        console.log(`Document with ID ${docId} deleted`);
+      } catch (e) {
+        console.log(`Something went wrong: ${e}`);
+      }
+    }
+
+    
+    async function readAllDocumentsInRealTime() {
+      try {
+        db.collection("brands").onSnapshot(snapshot => {
+          snapshot.docChanges().forEach(change => {
+            if (change.type === "added") {
+              console.log("New document:", change.doc.data());
+            }
+          });
+        });
+
+      } catch (e) {
+        console.log(`Something went wrong: ${e}`);
+      }
+      }
+
+    function readAllDocumentsInRealTimeWithFilter() {
+          try {
+            db.collection("brands")
+              .where("name", "==", "Brand A")
+              .onSnapshot(snapshot => {
+                snapshot.docChanges().forEach(change => {
+                  if (change.type === "added") {
+                    console.log("New document:", change.doc.data());
+                  }
+                });
+              });
+          } catch (e) {
+            console.log(`Something went wrong: ${e}`);
+          }
+        }
+
+  
+
+
+    window.api = {
+      createDocument,
+      readAllDocuments,
+      updateDocument,
+      deleteDocument,
+      readAllDocumentsInRealTime,
+      readAllDocumentsInRealTimeWithFilter
+    };
+  </script>
+</body>
+
+</html>

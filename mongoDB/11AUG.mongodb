@@ -1,0 +1,20 @@
+use('school')  
+
+
+db.student.insertMany([
+    { name: "Swaraj", age: 20, marks: 88, cohort: "Alpha" },
+    { name: "Utkarsh", age: 21, marks: 92, cohort: "Beta" },
+    { name: "Ananya", age: 19, marks: 76, cohort: "Gamma" }
+])
+
+db.student.find().pretty()
+
+
+db.student.find({age :"20",name:"swaraj"}).explain("executionStats")
+db.student.createIndex({age:1,name:1})
+db.student.find({age:"20"}).explain("executionStats")
+
+db.student.find({name:"swaraj"}).explain("executionStats")
+
+
+

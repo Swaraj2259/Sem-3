@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-auth-compat.js"></script>
+
+    <!-- Firebase UI -->
+    <script src="https://www.gstatic.com/firebasejs/ui/6.1.0/firebase-ui-auth.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/6.1.0/firebase-ui-auth.css" />
+</head>
+
+<body>
+    <div id="firebaseui-auth-container"></div>
+
+    <script>
+        // Firebase config
+        const firebaseConfig = {
+            apiKey: "AIzaSyDo8kMMen-pFs7-meRa6Ue2rcnbTE5xOtM",
+            authDomain: "classwork-81321.firebaseapp.com",
+            projectId: "classwork-81321",
+            storageBucket: "classwork-81321.firebasestorage.app",
+            messagingSenderId: "354105108326",
+            appId: "1:354105108326:web:48e360415142ed20580aa7",
+            measurementId: "G-HGCWJJ5HPE"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        // FirebaseUI config
+        const authUiConfig = {
+            signInOptions: [
+                firebase.auth.EmailAuthProvider.PROVIDER_ID,
+            ],
+            signInSuccessUrl: "dashboard.html",
+        };
+
+        // Start FirebaseUI
+        let authUi = new firebaseui.auth.AuthUI(firebase.auth());
+        authUi.start("#firebaseui-auth-container", authUiConfig);
+    </script>
+</body>
+
+</html>
